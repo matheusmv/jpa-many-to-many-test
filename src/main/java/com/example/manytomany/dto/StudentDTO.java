@@ -1,13 +1,18 @@
-package com.example.manytomany.resource.response;
+package com.example.manytomany.dto;
 
 import com.example.manytomany.domain.Student;
 
-public class StudentResponse {
+public class StudentDTO {
 
     private Long id;
     private String name;
 
-    public StudentResponse(com.example.manytomany.domain.Student student) {
+    public StudentDTO(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public StudentDTO(Student student) {
         this.id = student.getId();
         this.name = student.getName();
     }

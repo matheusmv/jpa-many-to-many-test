@@ -1,16 +1,22 @@
-package com.example.manytomany.resource.response;
+package com.example.manytomany.dto;
 
 import com.example.manytomany.domain.Course;
 
 import java.util.List;
 
-public class CourseWithStudentsResponse {
+public class CourseWithStudentsDTO {
 
     private Long id;
     private String name;
-    private List<StudentResponse> students;
+    private List<StudentDTO> students;
 
-    public CourseWithStudentsResponse(Course course) {
+    public CourseWithStudentsDTO(Long id, String name, List<StudentDTO> students) {
+        this.id = id;
+        this.name = name;
+        this.students = students;
+    }
+
+    public CourseWithStudentsDTO(Course course) {
         this.id = course.getId();
         this.name = course.getName();
     }
@@ -31,11 +37,11 @@ public class CourseWithStudentsResponse {
         this.name = name;
     }
 
-    public List<StudentResponse> getStudents() {
+    public List<StudentDTO> getStudents() {
         return students;
     }
 
-    public void setStudents(List<StudentResponse> students) {
+    public void setStudents(List<StudentDTO> students) {
         this.students = students;
     }
 }
