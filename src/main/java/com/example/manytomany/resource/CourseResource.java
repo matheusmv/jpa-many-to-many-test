@@ -26,7 +26,7 @@ public class CourseResource {
         return ResponseEntity.ok().body(listOfCourses);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CourseWithStudentsDTO> findById(@PathVariable Long id) {
         var courseWithStudents = courseService.getCourseWithStudents(id);
 
