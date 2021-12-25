@@ -11,14 +11,10 @@ import java.util.Optional;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    @Query("SELECT DISTINCT student FROM Student student " +
-            "JOIN FETCH student.registrations registrations " +
-            "JOIN FETCH registrations.course")
+    @Query("SELECT student FROM Student student")
     List<Student> retrieveAll();
 
-    @Query("SELECT DISTINCT student FROM Student student " +
-            "JOIN FETCH student.registrations registrations " +
-            "JOIN FETCH registrations.course course " +
+    @Query("SELECT student FROM Student student " +
             "WHERE student.id = :id")
     Optional<Student> retrieveById(Long id);
 

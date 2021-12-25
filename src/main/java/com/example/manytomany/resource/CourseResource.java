@@ -3,8 +3,8 @@ package com.example.manytomany.resource;
 import com.example.manytomany.resource.response.CourseResponse;
 import com.example.manytomany.resource.response.CourseWithStudentsResponse;
 import com.example.manytomany.resource.response.StudentResponse;
-import com.example.manytomany.service.CourseRegistrationService;
 import com.example.manytomany.service.CourseService;
+import com.example.manytomany.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +20,12 @@ import java.util.stream.Collectors;
 public class CourseResource {
 
     private final CourseService courseService;
-    private final CourseRegistrationService courseRegistrationService;
+    private final StudentService studentService;
 
     @Autowired
-    public CourseResource(
-            CourseService courseService,
-            CourseRegistrationService courseRegistrationService
-    ) {
+    public CourseResource(CourseService courseService, StudentService studentService) {
         this.courseService = courseService;
-        this.courseRegistrationService = courseRegistrationService;
+        this.studentService = studentService;
     }
 
     @GetMapping
@@ -44,7 +41,7 @@ public class CourseResource {
     @GetMapping(value = "/{id}")
     public ResponseEntity<CourseWithStudentsResponse> findById(@PathVariable Long id) {
         var course = courseService.find(id);
-        var listOfStudents = courseRegistrationService.getAllStudentsByCourseId(course.getId())
+        var listOfStudents = studentService.getAllStudentsByCourseId(course.getId())
                 .stream()
                 .map(StudentResponse::new)
                 .collect(Collectors.toList());
