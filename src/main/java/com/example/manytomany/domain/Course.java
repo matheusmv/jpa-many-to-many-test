@@ -1,7 +1,5 @@
 package com.example.manytomany.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +19,6 @@ public class Course {
     private String name;
 
     @OneToMany(mappedBy = "course")
-    @JsonManagedReference
     private Set<CourseRegistration> registrations = new HashSet<>();
 
     public Course() {

@@ -1,8 +1,10 @@
 package com.example.manytomany.dto;
 
+import com.example.manytomany.domain.CourseRegistration;
 import com.example.manytomany.domain.Student;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StudentWithCoursesDTO {
 
@@ -19,6 +21,10 @@ public class StudentWithCoursesDTO {
     public StudentWithCoursesDTO(Student student) {
         this.id = student.getId();
         this.name = student.getName();
+        this.courses = student.getRegistrations().stream()
+                .map(CourseRegistration::getCourse)
+                .map(CourseDTO::new)
+                .collect(Collectors.toList());
     }
 
     public Long getId() {

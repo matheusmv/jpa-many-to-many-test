@@ -3,7 +3,6 @@ package com.example.manytomany.service;
 import com.example.manytomany.domain.Student;
 import com.example.manytomany.dto.StudentDTO;
 import com.example.manytomany.dto.StudentWithCoursesDTO;
-import com.example.manytomany.repository.CourseRepository;
 import com.example.manytomany.repository.StudentRepository;
 import com.example.manytomany.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +13,8 @@ import java.util.List;
 @Service
 public class StudentService {
 
-    private final StudentRepository studentRepository;
-    private final CourseRepository courseRepository;
-
     @Autowired
-    public StudentService(
-            StudentRepository studentRepository,
-            CourseRepository courseRepository
-    ) {
-        this.studentRepository = studentRepository;
-        this.courseRepository = courseRepository;
-    }
+    private StudentRepository studentRepository;
 
     public List<StudentDTO> findAll() {
         return studentRepository.retrieveAll();
@@ -46,12 +36,9 @@ public class StudentService {
     }
 
     public StudentWithCoursesDTO getStudentWithCourses(Long id) {
-        var studentDTO = studentRepository.retrieveStudentDTOById(id)
+        return studentRepository.retrieveStudentWithCoursesByStudentId(id)
+                .map(StudentWithCoursesDTO::new)
                 .orElseThrow(() -> new ObjectNotFoundException(
                         String.format("Object with id %d not found in %s.", id, Student.class.getSimpleName())));
-
-        var listOfCourses = courseRepository.retrieveAllEnrolledCoursesByStudentId(studentDTO.getId());
-
-        return new StudentWithCoursesDTO(studentDTO.getId(), studentDTO.getName(), listOfCourses);
     }
 }

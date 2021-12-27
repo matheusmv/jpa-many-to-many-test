@@ -25,6 +25,14 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     Optional<Student> retrieveById(Long id);
 
     @Query("""
+            SELECT student FROM Student student
+            JOIN FETCH student.registrations registrations
+            JOIN FETCH registrations.course
+            WHERE student.id = :id
+            """)
+    Optional<Student> retrieveStudentWithCoursesByStudentId(Long id);
+
+    @Query("""
             SELECT new com.example.manytomany.dto.StudentDTO(student.id, student.name)
             FROM Student student
             WHERE student.id = :id

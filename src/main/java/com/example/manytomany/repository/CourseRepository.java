@@ -25,6 +25,14 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     Optional<Course> retrieveById(Long id);
 
     @Query("""
+            SELECT course FROM Course course
+            JOIN FETCH course.registrations registrations
+            JOIN FETCH registrations.student
+            WHERE course.id = :id
+            """)
+    Optional<Course> retrieveCourseWithStudentsByCourseId(Long id);
+
+    @Query("""
             SELECT new com.example.manytomany.dto.CourseDTO(course.id, course.name)
             FROM Course course
             WHERE course.id = :id
