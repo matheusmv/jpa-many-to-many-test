@@ -30,7 +30,7 @@ public class CourseRegistrationService {
                         String.format("Object with id %d not found in %s.", id, CourseRegistration.class.getSimpleName())));
     }
 
-    public CourseRegistration insert(CourseRegistration registration) {
+    public void insert(CourseRegistration registration) {
         registration.setId(null);
 
         Long courseId = registration.getCourse().getId();
@@ -40,7 +40,5 @@ public class CourseRegistrationService {
         registration.setStudent(studentService.find(studentId));
 
         courseRegistrationRepository.save(registration);
-
-        return registration;
     }
 }
